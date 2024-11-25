@@ -26,11 +26,13 @@
     // } else {
     //   log("Barcode Detector supported!");
     //
-    //   BarcodeDetector.getSupportedFormats().then(sf => {
+    //   BarcodeDetector.getSupportedFormats().then(sf => { 
     //     log(...sf)
     //   })
     // }
-    getUserMedia({ video: true }).then()
+    navigator.mediaDevices.getUserMedia({ video: true }).then(() => {
+      v.srcObject = mediaStream;
+    })
   </script>
 </body>
 
