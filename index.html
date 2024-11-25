@@ -30,7 +30,7 @@
     //     log(...sf)
     //   })
     // }
-    navigator.mediaDevices.getUserMedia({ video: true }).then(() => {
+    navigator.mediaDevices.getUserMedia({ video: true }).then((mediaStream) => {
       v.srcObject = mediaStream;
     })
   </script>
