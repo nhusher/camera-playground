@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barcoder</title>
+
+</head>
+
+<body>
+  <div id="log"></div>
+  <video id="video" height="200" width="200"></video>
+  <script>
+    const l = document.getElementById('log')
+    const v = document.getElementById('video')
+    function log(...args) {
+      const ll = document.createElement('div')
+      ll.innerHTML = args.join(' ')
+      l.appendChild(ll)
+    }
+
+    // check compatibility
+    // if (!("BarcodeDetector" in globalThis)) {
+    //   log("Barcode Detector is not supported by this browser.");
+    // } else {
+    //   log("Barcode Detector supported!");
+    //
+    //   BarcodeDetector.getSupportedFormats().then(sf => {
+    //     log(...sf)
+    //   })
+    // }
+    getUserMedia({ video: true }).then()
+  </script>
+</body>
+
+</html>
