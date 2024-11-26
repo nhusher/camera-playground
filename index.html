@@ -5,33 +5,49 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Barcoder</title>
-
+  <style>
+    .hbox {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="log"></div>
-  <video id="video" height="200" width="200"></video>
+  <div class="hbox">
+    <video id="video" height="480" width="640"></video>
+    <canvas id="canvas" height="480" width="640"></canvas>
+  </div>
+  <button id="btn">grab frame</button>
   <script>
-    const l = document.getElementById('log')
     const v = document.getElementById('video')
-    function log(...args) {
-      const ll = document.createElement('div')
-      ll.innerHTML = args.join(' ')
-      l.appendChild(ll)
-    }
+    const b = document.getElementById('btn')
+    const c = document.getElementById('canvas')
 
-    // check compatibility
-    // if (!("BarcodeDetector" in globalThis)) {
-    //   log("Barcode Detector is not supported by this browser.");
-    // } else {
-    //   log("Barcode Detector supported!");
-    //
-    //   BarcodeDetector.getSupportedFormats().then(sf => { 
-    //     log(...sf)
-    //   })
-    // }
+    const bc = new BarcodeDetector()
+    const ctx = c.getContext('2d')
+    
+    let imageCapture
     navigator.mediaDevices.getUserMedia({ video: true }).then((mediaStream) => {
       v.srcObject = mediaStream;
+      
+      const track = mediaStream.getVideoTracks()[0];
+      imageCapture = new ImageCapture(track);      
+    })
+    v.onloadedmetadata = () => {
+      video.play();
+    };
+    
+    b.addEventListener('click', () => {
+      if (imageCapture) {
+        imageCapture.grabFrame().then(f => {
+          ctx.drawImage(f, 0, 0)
+          bc.detect(f).then(bcs => {
+            console.log(bcs)
+          })
+        })
+      }
     })
   </script>
 </body>
